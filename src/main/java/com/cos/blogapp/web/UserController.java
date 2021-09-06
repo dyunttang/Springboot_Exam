@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.cos.blogapp.domain.user.User;
 import com.cos.blogapp.domain.user.UserRepository;
 import com.cos.blogapp.web.dto.LoginReqDto;
+import com.cos.blogapp.web.dto.SignupReqDto;
 
 
 @Controller
@@ -21,16 +22,16 @@ public class UserController {
 	
 	@GetMapping("/test/Querysignup")
 	public void testQuerySignup() {
-		userRepository.join("cos", "1234", "cos@nate.com");
+		userRepository.join("sin", "1234", "cos@nate.com");
 	}
 	
 	
 	@GetMapping("/test/signup")
 	public void testSignup() {
 		User user = new User();
-		user.setUsername("ssar");
+		user.setUsername("sun");
 		user.setPassword("1234");
-		user.setEmail("ssar@nate.com");
+		user.setEmail("sun@nate.com");
 		
 		// insert into user(username, password, email) values('ssar', '1234', 'ssar@nate.com')
 		userRepository.save(user);
@@ -68,4 +69,19 @@ public class UserController {
 		// 5. 메인페이지를 돌려주기
 		return "home";
 	}
+	
+	@PostMapping("/signup")
+	public String signup(SignupReqDto dto) { // username=love&password=1234&email=love@nate.com
+		
+		User user = new User();
+		user.setUsername(dto.getUsername());
+		user.setPassword(dto.getPassword());
+		user.setEmail(dto.getEmail());
+		
+		userRepository.save(user);		
+		
+		return "redirect:/loginForm"; // Redirection(300)
+		
+	}
+	
 }
